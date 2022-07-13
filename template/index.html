@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Stock Market Web App</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}">
+    <script src="https://kit.fontawesome.com/651ff6f856.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <nav id="sidebar" class="position-fixed">
+            <div class="sidebar-header">
+                <img src="{% static '/images/logo.jpg' %}"
+                    width="200px" height="190px"  />
+                <h3>Stock Market Prediction</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fas fa-home"></i>
+                        &nbsp; Home</a>
+                </li>
+                <li class="mt-2">
+                    <a href="/analysis"><i class="fas fa-chart-bar"></i> &nbsp; Analysis</a>
+                </li>
+               
+                <li class="mt-2">
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fas fa-sign-in-alt"></i> &nbsp; Login</a>
+                </li>
+                <li class="mt-2">
+                    <a href="#"><i class="fas fa-id-card"></i> &nbsp; Contact</a>
+                </li>
+            </ul>
+        </nav>
+        <div id="content">
+            <!-- Circular Stock -->
+<div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+    "symbols": [
+      {
+        "proName": "FOREXCOM:SPXUSD",
+        "title": "S&P 500"
+      },
+      {
+        "proName": "FOREXCOM:NSXUSD",
+        "title": "US 100"
+      },
+      {
+        "proName": "FX_IDC:EURUSD",
+        "title": "EUR/USD"
+      },
+      {
+        "proName": "BITSTAMP:BTCUSD",
+        "title": "Bitcoin"
+      },
+      {
+        "proName": "BITSTAMP:ETHUSD",
+        "title": "Ethereum"
+      }
+    ],
+    "showSymbolLogo": true,
+    "colorTheme": "light",
+    "isTransparent": false,
+    "displayMode": "adaptive",
+    "locale": "in"
+  }
+    </script>
+  </div>
+  <!-- Circular Stock END -->
+            <form action="" method="post">
+                <div class="container">
+                    <div class="row mt-3">
+                        <div class="col-4">
+                         <!-- 3 stock widget -->
+<div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+    {
+    "symbol": "NASDAQ:META",
+    "width": 350,
+    "height": 220,
+    "locale": "in",
+    "dateRange": "12M",
+    "colorTheme": "light",
+    "trendLineColor": "rgba(41, 98, 255, 1)",
+    "underLineColor": "rgba(41, 98, 255, 0.3)",
+    "underLineBottomColor": "rgba(41, 98, 255, 0)",
+    "isTransparent": false,
+    "autosize": false,
+    "largeChartUrl": ""
+  }
+    </script>
+  </div>
+                        </div>
+                        <div class="col-4">
+                         
+<div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+    {
+    "symbol": "NASDAQ:AAPL",
+    "width": 350,
+    "height": 220,
+    "locale": "in",
+    "dateRange": "12M",
+    "colorTheme": "light",
+    "trendLineColor": "rgba(41, 98, 255, 1)",
+    "underLineColor": "rgba(41, 98, 255, 0.3)",
+    "underLineBottomColor": "rgba(41, 98, 255, 0)",
+    "isTransparent": false,
+    "autosize": false,
+    "largeChartUrl": ""
+  }
+    </script>
+  </div>
+  </div>
+  <div class="col-4">
+<div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+    {
+    "symbol": "NASDAQ:AMZN",
+    "width": 350,
+    "height": 220,
+    "locale": "in",
+    "dateRange": "12M",
+    "colorTheme": "light",
+    "trendLineColor": "rgba(41, 98, 255, 1)",
+    "underLineColor": "rgba(41, 98, 255, 0.3)",
+    "underLineBottomColor": "rgba(41, 98, 255, 0)",
+    "isTransparent": false,
+    "autosize": false,
+    "largeChartUrl": ""
+  }
+    </script>
+  </div>
+  
+  </div>
+                        </div>
+                    </div>
+                     <!-- 3 stock widget -->
+                    <div class="row mt-3 mx-4">
+                        <div class="col-12">
+                             <!-- Full stock widget -->
+                            <span class="tradingview-widget-container">
+                                <div id="tradingview_04098"></div>
+                              
+                                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                                <script type="text/javascript">
+                                    new TradingView.widget(
+                                        {
+                                            "width": 1000,
+                                            "height": 600,
+                                            "symbol": "NASDAQ:AAPL",
+                                            "timezone": "Etc/UTC",
+                                            "theme": "light",
+                                            "style": "1",
+                                            "locale": "in",
+                                            "toolbar_bg": "#f1f3f6",
+                                            "enable_publishing": true,
+                                            "withdateranges": true,
+                                            "range": "YTD",
+                                            "hide_side_toolbar": false,
+                                            "allow_symbol_change": true,
+                                            "details": true,
+                                            "hotlist": true,
+                                            "calendar": true,
+                                            "show_popup_button": true,
+                                            "popup_width": "1000",
+                                            "popup_height": "650",
+                                            "container_id": "tradingview_04098"
+                                        }
+                                    );
+                                </script>
+                            </span>
+                        </div>
+
+                    </div>
+                      <!-- Full stock widget End -->
+                    <div class="row mt-5">
+                        <!-- 2 stock analysis -->
+                        <div class="col-6">
+                            <div class="tradingview-widget-container">
+                                <div class="tradingview-widget-container__widget"></div>
+                              
+                                <script type="text/javascript"
+                                    src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js"
+                                    async>
+                                        {
+                                        "interval": "1m",
+                                        "width": '425px',
+                                        "isTransparent": false,
+                                        "height": '450px',
+                                        "symbol": "NASDAQ:AAPL",
+                                        "showIntervalTabs": true,
+                                        "locale": "in",
+                                        "colorTheme": "light"
+                                        }
+                                </script>
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            
+                            <div class="tradingview-widget-container">
+                                <div class="tradingview-widget-container__widget"></div>
+                            
+                                <script type="text/javascript"
+                                    src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js"
+                                    async>
+                                        {
+                            "colorTheme": "light",
+                            "dateRange": "12M",
+                            "showChart": true,
+                            "locale": "in",
+                            "largeChartUrl": "",
+                            "isTransparent": false,
+                            "showSymbolLogo": true,
+                            "showFloatingTooltip": false,
+                            "width": "400",
+                            "height": "460",
+                            "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
+                            "plotLineColorFalling": "rgba(41, 98, 255, 1)",
+                            "gridLineColor": "rgba(240, 243, 250, 0)",
+                            "scaleFontColor": "rgba(120, 123, 134, 1)",
+                            "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+                            "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
+                                "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+                                    "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
+                                        "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
+                                            "tabs": [
+                                                {
+                                                                                                                            "title": "Indices",
+                                                                                                                            "symbols": [
+                                                                                                                                {
+                                                                                                                                    "s": "NASDAQ:MSFT",
+                                                                                                                                    "d": "Microsoft"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "NASDAQ:AAPL",
+                                                                                                                                    "d": "Apple"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "NASDAQ:TSLA",
+                                                                                                                                    "d": "Tesla"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "NASDAQ:AMZN",
+                                                                                                                                    "d": "Amazon"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "NYSE:TWTR",
+                                                                                                                                    "d": "Twitter"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "NSE:TCS",
+                                                                                                                                    "d": "TCS"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "NSE:INFY",
+                                                                                                                                    "d": "Infosys"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "NASDAQ:GOOGL",
+                                                                                                                                    "d": "Google"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "NSE:WIPRO",
+                                                                                                                                    "d": "Wipro"
+                                                                                                                                }
+                                                                                                                            ],
+                                                                                                                            "originalTitle": "Indices"
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "title": "Futures",
+                                                                                                                            "symbols": [
+                                                                                                                                {
+                                                                                                                                    "s": "CME_MINI:ES1!",
+                                                                                                                                    "d": "S&P 500"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "CME:6E1!",
+                                                                                                                                    "d": "Euro"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "COMEX:GC1!",
+                                                                                                                                    "d": "Gold"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "NYMEX:CL1!",
+                                                                                                                                    "d": "Crude Oil"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "NYMEX:NG1!",
+                                                                                                                                    "d": "Natural Gas"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "CBOT:ZC1!",
+                                                                                                                                    "d": "Corn"
+                                                                                                                                }
+                                                                                                                            ],
+                                                                                                                            "originalTitle": "Futures"
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "title": "Bonds",
+                                                                                                                            "symbols": [
+                                                                                                                                {
+                                                                                                                                    "s": "CME:GE1!",
+                                                                                                                                    "d": "Eurodollar"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "CBOT:ZB1!",
+                                                                                                                                    "d": "T-Bond"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "CBOT:UB1!",
+                                                                                                                                    "d": "Ultra T-Bond"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "EUREX:FGBL1!",
+                                                                                                                                    "d": "Euro Bund"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "EUREX:FBTP1!",
+                                                                                                                                    "d": "Euro BTP"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "EUREX:FGBM1!",
+                                                                                                                                    "d": "Euro BOBL"
+                                                                                                                                }
+                                                                                                                            ],
+                                                                                                                            "originalTitle": "Bonds"
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "title": "Forex",
+                                                                                                                            "symbols": [
+                                                                                                                                {
+                                                                                                                                    "s": "FX:EURUSD",
+                                                                                                                                    "d": "EUR/USD"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "FX:GBPUSD",
+                                                                                                                                    "d": "GBP/USD"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "FX:USDJPY",
+                                                                                                                                    "d": "USD/JPY"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "FX:USDCHF",
+                                                                                                                                    "d": "USD/CHF"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "FX:AUDUSD",
+                                                                                                                                    "d": "AUD/USD"
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                    "s": "FX:USDCAD",
+                                                                                                                                    "d": "USD/CAD"
+                                                                                                                                }
+                                                                                                                            ],
+                                                                                                                            "originalTitle": "Forex"
+                                                                                                                        }
+                                                                                                                    ]
+                                        }
+                                    </script>
+                            </div>
+                          <!-- 2 stock analysis -->
+                        </div>
+                    </div>
+                    
+                    <!-- <label>Check</label> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
