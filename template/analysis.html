@@ -79,6 +79,7 @@
                     <input
                       type="submit"
                       value="Search"
+                      onclick="trying()"
                       class="btn btn-outline-primary"
                     />
                   </div>
@@ -91,6 +92,11 @@
                   <img src="data:image/png;base64, {{chart|safe}}" />
                 {% endif %}
               
+              </div>
+            </div>
+            <div class="row" id="spinner" style="display: none;">
+              <div class="col-12">
+                loading ...
               </div>
             </div>
             <div class="row">
@@ -106,6 +112,11 @@
         </form>
       </div>
     </div>
-  
+  <script>
+    function trying(){
+      console.log("trying");
+      document.getElementById("spinner").style.display = "block";
+    }
+  </script>
   </body>
 </html>

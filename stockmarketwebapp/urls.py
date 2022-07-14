@@ -19,6 +19,7 @@ from django.urls import path
 from django.urls import re_path as url
 from firstPage import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.auth import views as view_auth
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +27,10 @@ urlpatterns = [
     url('analysis',views.analysis,name='analysis'),
     url('predictValue',views.predictValue,name='predictValue'),
     url('login',views.login,name='login'),
-    url('validateRegisterCredentials',views.login,name='validateRegisterCredentials'),
-    url('validateLoginCredentials',views.login,name='validateLoginCredentials'),
+    url('validateRegisterCredentials',views.validateRegisterCredentials,name='validateRegisterCredentials'),
+    url('validateLoginCredentials',views.validateLoginCredentials,name='validateLoginCredentials'),
+    url('controlpanel',views.controlpanel,name='controlpanel'),
+    # url('resetpassword',view_auth.reset ,name='forgotpassword'),
+
 ]
 urlpatterns += staticfiles_urlpatterns()

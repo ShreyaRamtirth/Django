@@ -207,3 +207,9 @@ input {
 	height: 40px;
 	width: 40px;
 }
+.show{
+	display: block;
+}
+.hide{
+	display: none;
+}
