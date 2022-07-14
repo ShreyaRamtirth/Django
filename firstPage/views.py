@@ -63,5 +63,5 @@ def validateLoginCredentials(request):
 def controlpanel(request):
     return render(request,'controlpanel.html')    
     
-def forgotpassword(request):
-    return render(request, 'forgot.html')
+# def reset_password(request):
+#     return render(request, 'forgot.html')
