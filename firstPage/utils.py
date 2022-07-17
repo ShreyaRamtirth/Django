@@ -1,5 +1,7 @@
+import jwt
 from pymongo import MongoClient
 from firstPage.config import database
+from django.http import HttpResponse  
 CONNECTION_STRING = database
 client = MongoClient(CONNECTION_STRING)
 stock = client['stockmarket']
@@ -18,9 +20,16 @@ def get_db_register(temp):
 
 def get_db_login(temp):
     creds = user_collection.find_one({"email":temp["email"], "password": temp["password"]})
+    
     if creds:
         if creds['role'] == 'admin':
-            return 'admin'
+            return ('admin',creds['name'])
     else:
-        return "User not found! Please Register"
-    return True
+        return ("User not found! Please Register")
+    return ('user', creds['name'])
+
+
+def setcookie(request):  
+    response = HttpResponse("Cookie Set")  
+    # response.set_cookie('jwt', jwt)
+    return response.set_cookie('jwt', request)

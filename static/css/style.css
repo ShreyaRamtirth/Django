@@ -50,10 +50,16 @@ a:focus {
     width: 100%;
     overflow-x: hidden;
     padding: 10px;
-    margin-left: 250px;
     min-height: 100vh;
     transition: all 0.3s;
 }
+
+#content{
+    
+    margin-left: 250px;
+    width: 100%;
+}
+
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */

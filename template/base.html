@@ -18,10 +18,12 @@
                 <img src="{% static '/images/logo.jpg' %}"
                     width="200px" height="190px"  />
                 <h3>Stock Market Prediction</h3>
-                {% load socialaccount %}
-                {% if user.is_authenticated %}
-  <p>Welcome, You are logged in as {{ user.username }}</p>
-  {% endif %}
+                <!-- {% load socialaccount %} -->
+                {% if res != "" %}
+                <p>Welcome, You are logged in as {{ res }}</p>
+                {% else %}
+                <p>Welcome, Guest</p>
+                {% endif %}
             </div>
 
             <ul class="list-unstyled components">
@@ -33,7 +35,7 @@
                 <li class="mt-2">
                     <a href="/analysis"><i class="fas fa-chart-bar"></i> &nbsp; Analysis</a>
                 </li>
-                {% if not user.is_authenticated %}
+                {% if not res != "" %}
                 <li class="mt-2">
                     <a href="/loginuser" data-toggle="collapse" aria-expanded="false"><i class="fas fa-sign-in-alt"></i> &nbsp; Login</a>
                 </li>
@@ -53,6 +55,7 @@
         {% block content %}
         {% endblock %}
     </div>
+</div>
 
     </body>
     </html>
