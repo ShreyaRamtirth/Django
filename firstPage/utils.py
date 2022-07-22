@@ -1,3 +1,4 @@
+from unicodedata import name
 import jwt
 from pymongo import MongoClient
 from firstPage.config import database
@@ -6,6 +7,7 @@ CONNECTION_STRING = database
 client = MongoClient(CONNECTION_STRING)
 stock = client['stockmarket']
 user_collection = stock["User"]
+stock_collection = stock["Stock"]
 
 def get_db_register(temp):
     dict = { "name": temp["name"], "email": temp['email'], "contact": temp['number'], "password": temp['password'], 'role': 'user' }
@@ -29,7 +31,15 @@ def get_db_login(temp):
     return ('user', creds['name'])
 
 
-def setcookie(request):  
-    response = HttpResponse("Cookie Set")  
-    # response.set_cookie('jwt', jwt)
-    return response.set_cookie('jwt', request)
+def getAllUsers(search):
+    result = user_collection.find({})
+    print(search)
+    if search != None:
+        result = user_collection.find({ 'name' : search})
+    return result
+
+
+def add_search(search,user):
+    result = user_collection.find({ 'email' : user['Username']})
+    dict = { "user": result[0]['_id'], "symbol": search}
+    stock_collection.insert_one(dict)

@@ -15,6 +15,7 @@ urlpatterns = [
     url('validateRegisterCredentials',views.validateRegisterCredentials,name='validateRegisterCredentials'),
     url('validateLoginCredentials',views.validateLoginCredentials,name='validateLoginCredentials'),
     url('controlpanel',views.controlpanel,name='controlpanel'),
+    url('search',views.controlpanel,name='controlpanel'),
     url('accounts/', include('allauth.urls')),
     url("logout", views.logout_request, name= "logout"),
 ]

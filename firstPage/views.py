@@ -1,30 +1,37 @@
-
-from django.shortcuts import render
+from urllib import response
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from firstPage.models import get_df,get_plot
-from firstPage.utils import get_db_register, get_db_login, setcookie
+from firstPage.utils import add_search, get_db_register, get_db_login, getAllUsers
 import pandas as pd
 from django.contrib.staticfiles import finders
 import json
-from django.contrib.auth import login, authenticate, logout
-# from decode import decode_data_values 
 from firstPage.encode import encode_data_values
-# Create your views here.
+from firstPage.decode import decode_data_values
+res = ''
 jwt = {}
+
+
 def index(request):
-    res = ''
-    if request.user.is_authenticated:
-        
-        print("user login")
-    return render(request,'index.html',{'res':res})
-   
+    if request.COOKIES['jwt'] == {}:
+        response = render(request,'index.html',{'res':''})
+    else:
+        response = render(request,'index.html',{'res':res})
+        response.set_cookie('jwt',jwt)
+    return response
+
+
 def analysis(request):
     result = finders.find('datasets/symbol.csv')
     filename = pd.read_csv(result)
     json_records = filename.reset_index().to_json(orient ='records')
     data = []
     data = json.loads(json_records)
-    return render(request,'analysis.html', {'data': data})
+    if res == '':
+        return render(request,'analysis.html', {'data': data, 'res': res})
+    else:
+        return render(request,'analysis.html', {'data': data, 'res': res})
+
 
 def predictValue(request):
     temp = {}
@@ -34,13 +41,18 @@ def predictValue(request):
         end = pd.to_datetime('12-05-2022')
         df = get_df(temp['stocksymbol'], start , end)
         response = get_plot(df,temp['stocksymbol'])
+        if request.COOKIES['jwt'] != {}:
+            user = decode_data_values(request.COOKIES['jwt'])
+            add_search(temp['stocksymbol'], user)
         txt = f'{response[1]}'
         pred_value = txt.replace('[','').replace(']','')
-    return render(request,'analysis.html',{'chart': response[0], 'pred_price': pred_value})
+    return render(request,'analysis.html',{'chart': response[0], 'pred_price': pred_value, 'res': res})
+
 
 def login(request):
     res = ''
     return render(request,'login.html',{'res':res})
+
 
 def validateRegisterCredentials(request):
     temp = {}
@@ -54,27 +66,43 @@ def validateRegisterCredentials(request):
         return render(request,'login.html',{'res':res, 'display': "show" })
     return render(request,'login.html',{'res':res, 'display': "hide" })
 
+
 def validateLoginCredentials(request):
     temp = {}
+    global jwt,res
     if request.method == 'POST':
         temp['email'] = request.POST.get('email')
         temp['password'] = request.POST.get('password')
         res = get_db_login(temp)
+        temp['name'] = res[1]
         jwt = encode_data_values(temp)
-        print(setcookie(jwt))
 
         if res[0] == 'admin':
-            return render(request,'controlpanel.html', {'res': res[0]})    
+            return redirect('controlpanel')
         elif res[0] != 'user':
-            return render(request,'login.html',{'res':res[0] })    
-    return render(request,'index.html',{'res': res[1]})
+            return redirect('^$')
+
+    response = render(request,'index.html',{'res': res[1]})
+    response.set_cookie('jwt',jwt)
+    return response
 
 
 def controlpanel(request):
-    return render(request,'controlpanel.html')    
-    
+    if request.COOKIES['jwt'] == {}:
+        pass
+    else:
+        res = decode_data_values(jwt)
+    search = ''
+    if request.method == 'GET':
+        search = request.GET.get('search')
+        users = getAllUsers(search)
+        response = render(request,'controlpanel.html', {'res': res['Name'], 'users': users })
+        response.set_cookie('jwt',jwt)
+        return response
+
 
 def logout_request(request):
     res = ''
-    logout(request)
-    return render(request, 'index.html', {'res':res})
+    response = render(request, 'index.html', {'res':res})
+    response.delete_cookie('jwt')
+    return response

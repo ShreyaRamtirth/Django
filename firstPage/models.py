@@ -62,7 +62,7 @@ def get_plot(df,stockval):
     train = data[:training_data_len]
     valid = data[training_data_len:]
     valid['Predictions'] = predictions
-    plt.figure(figsize = (11, 5))
+    plt.figure(figsize = (10, 5))
     plt.title(stockval)
     plt.xlabel('Date', fontsize=12)
     plt.ylabel('Close Price', fontsize=12)
