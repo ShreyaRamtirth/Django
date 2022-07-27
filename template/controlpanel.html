@@ -1,25 +1,114 @@
 {% extends "base.html" %}
 {% block content %}
+<body onload="load()">
 <div class="container">
-  <div class="d-flex justify-content-around mt-5">
+  <!-- <div class="d-flex justify-content-around mt-5">
     <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Lorem</p>
+          <i class="fa-solid fa-users"></i>
+          <h5 class="card-title text-center"> No of Users</h5>
+          <p class="card-text fs-2 text-dark text-center fw-bold" id='0101'>0</p>
         </div>
       </div>
     <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Lorem</p>
+          <h5 class="card-title text-center">No of Search</h5>
+          <p class="card-text fs-2 text-dark fw-bold text-center" id='0102'>0</p>
         </div>
       </div>
     <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Lorem</p>
+          <h5 class="card-title text-center">No of Stocks</h5>
+          <p class="card-text fs-2 text-dark fw-bold text-center" id='0103'>0</p>
         </div>
       </div>
+  </div> -->
+  
+  <div class="row mt-5 mb-5">
+    <div class="col-lg-6 col-md-12 col-sm-12 col-xl-3">
+      <div class="card overflow-hidden">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h6 class="">Total Sales</h6>
+              <h3 class="mb-2 number-font">34,516</h3>
+              <p class="text-muted mb-0">
+                <span class="text-primary"><i class="fa fa-chevron-circle-up text-primary me-1"></i> 3%</span>
+                last month
+              </p>
+            </div>
+            <div class="col col-auto">
+              <div class="counter-icon bg-primary-gradient box-shadow-primary brround ms-auto">
+                <i class="fe fe-trending-up text-white mb-5 "></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12 col-xl-3">
+      <div class="card overflow-hidden">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h6 class="">Total Leads</h6>
+              <h3 class="mb-2 number-font">56,992</h3>
+              <p class="text-muted mb-0">
+                <span class="text-secondary"><i class="fa fa-chevron-circle-up text-secondary me-1"></i> 3%</span>
+                last month
+              </p>
+            </div>
+            <div class="col col-auto">
+              <div class="counter-icon bg-danger-gradient box-shadow-danger brround  ms-auto">
+                <i class="icon icon-rocket text-white mb-5 "></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12 col-xl-3">
+      <div class="card overflow-hidden">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h6 class="">Total Profit</h6>
+              <h3 class="mb-2 number-font">$42,567</h3>
+              <p class="text-muted mb-0">
+                <span class="text-success"><i class="fa fa-chevron-circle-down text-success me-1"></i> 0.5%</span>
+                last month
+              </p>
+            </div>
+            <div class="col col-auto">
+              <div class="counter-icon bg-secondary-gradient box-shadow-secondary brround ms-auto">
+                <i class="fe fe-dollar-sign text-white mb-5 "></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12 col-xl-3">
+      <div class="card overflow-hidden">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h6 class="">Total Cost</h6>
+              <h3 class="mb-2 number-font">$34,789</h3>
+              <p class="text-muted mb-0">
+                <span class="text-danger"><i class="fa fa-chevron-circle-down text-danger me-1"></i>0.2%</span>
+                last month
+              </p>
+            </div>
+            <div class="col col-auto">
+              <div class="counter-icon bg-success-gradient box-shadow-success brround  ms-auto">
+                <i class="fa-solid fa-users mb-5 "></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <form action="search" method="get" >
     {% csrf_token %}
@@ -30,7 +119,7 @@
       <input class="btn btn-primary" type="submit" value="Search">
     </div>
   </form>
-  <div class="d-flex justify-content-around mt-3 mx-5 shadow">
+   <div class="d-flex justify-content-around mt-3 mx-5 shadow">
     <table class="table align-middle mb-0 bg-white">
       <thead class="bg-light">
         <tr>
@@ -65,6 +154,49 @@
         {% endfor %}
       </tbody>
     </table>
-  </div>
+  </div> 
+  
 </div>
+
+<script>
+  function animate(obj, initVal, lastVal, duration) {
+     let startTime = null;
+
+  //get the current timestamp and assign it to the currentTime variable
+  let currentTime = Date.now();
+
+  //pass the current timestamp to the step function
+  const step = (currentTime ) => {
+
+  //if the start time is null, assign the current time to startTime
+  if (!startTime) {
+     startTime = currentTime ;
+  }
+
+  //calculate the value to be used in calculating the number to be displayed
+  const progress = Math.min((currentTime - startTime)/ duration, 1);
+
+  //calculate what to be displayed using the value gotten above
+  obj.innerHTML = Math.floor(progress * (lastVal - initVal) + initVal);
+
+  //checking to make sure the counter does not exceed the last value (lastVal)
+  if (progress < 1) {
+     window.requestAnimationFrame(step);
+  } else {
+        window.cancelAnimationFrame(window.requestAnimationFrame(step));
+     }
+  };
+  //start animating
+     window.requestAnimationFrame(step);
+  }
+  let text1 = document.getElementById('0101');
+  let text2 = document.getElementById('0102');
+  let text3 = document.getElementById('0103');
+  const load = () => {
+     animate(text1, 0, 511, 7000);
+     animate(text2, 0, 232, 7000);
+     animate(text3, 100, 25, 7000);
+  }
+</script>
+</body>
 {% endblock %}

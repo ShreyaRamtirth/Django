@@ -13,9 +13,10 @@ jwt = {}
 
 
 def index(request):
-    if request.COOKIES['jwt'] == {}:
+    if request.COOKIES['jwt'] == "{}":
         response = render(request,'index.html',{'res':''})
     else:
+        print(res)
         response = render(request,'index.html',{'res':res})
         response.set_cookie('jwt',jwt)
     return response
@@ -41,7 +42,7 @@ def predictValue(request):
         end = pd.to_datetime('12-05-2022')
         df = get_df(temp['stocksymbol'], start , end)
         response = get_plot(df,temp['stocksymbol'])
-        if request.COOKIES['jwt'] != {}:
+        if request.COOKIES['jwt'] != "{}":
             user = decode_data_values(request.COOKIES['jwt'])
             add_search(temp['stocksymbol'], user)
         txt = f'{response[1]}'

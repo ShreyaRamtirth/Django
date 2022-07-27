@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Analysis</title>
+    <title>Login</title>
     {% load static %}
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -17,20 +17,62 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
-    <div class="alert alert-primary text-center {display}" role="alert">
-      {% if res %} {{res}} {% endif %}
+    {% if res %}
+    <div class="alert alert-primary text-center {display}" id="result" role="alert">
+      {{res}}
     </div>
+    {% endif %}
 
     <div class="login-container mt-5">
       <div class="container" id="container">
         <div class="form-container sign-up-container">
-          <form action="validateRegisterCredentials" method="post">
+          <form
+            action="validateRegisterCredentials"
+            onsubmit="return validateForm();"
+            method="post"
+          >
             {% csrf_token %}
-            <h1>Create Account</h1>
-            <input type="text" name="name" placeholder="Name" />
-            <input type="email" name="email" placeholder="Email" />
-            <input type="password" name="password" placeholder="Password" />
-            <input type="number" name="number" placeholder="Phone Number" />
+            <h3>Create Account</h3>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Name"
+              oninput="namevalidation()"
+            />
+            <small class="fs-6 text-danger" id="errname" style="display: none"
+              >Name should contain only alphabet</small
+            >
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Email"
+              oninput="emailvalidation()"
+            />
+            <small class="fs-6 text-danger" id="erremail" style="display: none"
+              >Email is Invalid</small
+            >
+            <input
+              type="password"
+              name="password"
+              id="pass"
+              placeholder="Password"
+              oninput="passvalidation()"
+            />
+            <small class="fs-6 text-danger" id="errpass" style="display: none"
+              >Password should contain Uppercase, Lowercase & digit.</small
+            >
+            <input
+              type="number"
+              name="number"
+              id="number"
+              placeholder="Phone Number"
+              oninput="phvalidation()"
+            />
+            <small class="fs-6 text-danger" id="errphno" style="display: none"
+              >Number sould be 10 digit long</small
+            >
             <button type="submit" class="submit mt-3">Sign Up</button>
           </form>
         </div>
@@ -40,10 +82,8 @@
             <h1 class="mb-5">Sign in</h1>
             <input type="email" name="email" placeholder="Email" />
             <input type="password" name="password" placeholder="Password" />
-            <!-- <form class="login" method="POST" action="/accounts/login/"> -->
             {% load socialaccount %}
             <a href="{% provider_login_url 'google' %}">Login With Google</a>
-            <!-- </form> -->
             <button type="submit" class="submit" value="Sign In">
               Sign In
             </button>
@@ -79,6 +119,66 @@
       signInButton.addEventListener("click", () => {
         container.classList.remove("right-panel-active");
       });
+
+      function namevalidation() {
+        var pattern = /^[A-Za-z ]{1,}$/;
+        var str = document.getElementById("name").value;
+        if (!pattern.test(str)) {
+          document.getElementById("errname").style.display = "block";
+          return false;
+        } else {
+          document.getElementById("errname").style.display = "none";
+          return true;
+        }
+      }
+      function emailvalidation() {
+        var pattern =
+          /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        var str = document.getElementById("email").value;
+        if (!pattern.test(str)) {
+          document.getElementById("erremail").style.display = "block";
+          return false;
+        } else {
+          document.getElementById("erremail").style.display = "none";
+          return true;
+        }
+      }
+
+      function passvalidation() {
+        var pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        var str = document.getElementById("pass").value;
+        if (!pattern.test(str)) {
+          document.getElementById("errpass").style.display = "block";
+          return false;
+        } else {
+          document.getElementById("errpass").style.display = "none";
+          return true;
+        }
+      }
+
+      function phvalidation() {
+        var pattern = /^[0-9]{10}$/;
+        var str = document.getElementById("number").value;
+        if (!pattern.test(str)) {
+          document.getElementById("errphno").style.display = "block";
+          return false;
+        } else {
+          document.getElementById("errphno").style.display = "none";
+          return true;
+        }
+      }
+
+      function validateForm(){
+        if( namevalidation() && emailvalidation() && phvalidation() && passvalidation() )
+        {
+          return true
+        }else{
+          alert("Please Validate")
+          // document.getElementById("result").innerText = "Please Insert valid information."
+          // document.getElementById("result").style.display = "block";
+          return false
+        }
+      }
     </script>
   </body>
 </html>
