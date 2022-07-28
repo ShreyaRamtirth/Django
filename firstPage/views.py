@@ -13,13 +13,17 @@ jwt = {}
 
 
 def index(request):
-    if request.COOKIES['jwt'] == "{}":
-        response = render(request,'index.html',{'res':''})
+    if 'jwt' in request.COOKIES:
+        if request.COOKIES['jwt'] == "{}" or request.COOKIES['jwt'] == {} or request.COOKIES['jwt'] == None or res == '':
+            response = render(request,'index.html',{'res':''})
+        else:
+            response = render(request,'index.html',{'res':res['Name']})
+            response.set_cookie('jwt',jwt)
+        return response
     else:
-        print(res)
-        response = render(request,'index.html',{'res':res})
-        response.set_cookie('jwt',jwt)
-    return response
+        response = render(request,'index.html',{'res':''})
+        return response
+    
 
 
 def analysis(request):
@@ -28,10 +32,16 @@ def analysis(request):
     json_records = filename.reset_index().to_json(orient ='records')
     data = []
     data = json.loads(json_records)
-    if res == '':
-        return render(request,'analysis.html', {'data': data, 'res': res})
+    global res
+    if 'jwt' in request.COOKIES:
+        if res == '':
+            return render(request,'analysis.html', {'data': data, 'res': res})
+        else:
+            return render(request,'analysis.html', {'data': data, 'res': res['Name']})
     else:
+        res = ''
         return render(request,'analysis.html', {'data': data, 'res': res})
+
 
 
 def predictValue(request):
@@ -85,25 +95,38 @@ def validateLoginCredentials(request):
 
     response = render(request,'index.html',{'res': res[1]})
     response.set_cookie('jwt',jwt)
+    print("cookie set ")
     return response
 
 
 def controlpanel(request):
-    if request.COOKIES['jwt'] == {}:
-        pass
+    if 'jwt' in request.COOKIES:
+        if request.COOKIES['jwt'] == {}:
+            pass
+        else:
+            global res
+            res = decode_data_values(jwt)
+        search = ''
+        if request.method == 'GET':
+            search = request.GET.get('search')
+            users = getAllUsers(search)
+            response = render(request,'controlpanel.html', {'res': res['Name'], 'users': users })
+            response.set_cookie('jwt',jwt)
+            return response
     else:
-        res = decode_data_values(jwt)
-    search = ''
-    if request.method == 'GET':
-        search = request.GET.get('search')
-        users = getAllUsers(search)
-        response = render(request,'controlpanel.html', {'res': res['Name'], 'users': users })
-        response.set_cookie('jwt',jwt)
-        return response
+        if request.method == 'GET':
+            search = request.GET.get('search')
+            users = getAllUsers(search)
+            response = render(request,'controlpanel.html', {'res': '', 'users': users })
+            response.set_cookie('jwt',jwt)
+            return response
+
 
 
 def logout_request(request):
+    global res
     res = ''
     response = render(request, 'index.html', {'res':res})
     response.delete_cookie('jwt')
+    # response.set_cookie('jwt',"")
     return response
