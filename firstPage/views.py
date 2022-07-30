@@ -17,7 +17,7 @@ def index(request):
         if request.COOKIES['jwt'] == "{}" or request.COOKIES['jwt'] == {} or request.COOKIES['jwt'] == None or res == '':
             response = render(request,'index.html',{'res':''})
         else:
-            response = render(request,'index.html',{'res':res['Name']})
+            response = render(request,'index.html',{'res':res['Name'], 'role': res['role']})
             response.set_cookie('jwt',jwt)
         return response
     else:
@@ -37,7 +37,7 @@ def analysis(request):
         if res == '':
             return render(request,'analysis.html', {'data': data, 'res': res})
         else:
-            return render(request,'analysis.html', {'data': data, 'res': res['Name']})
+            return render(request,'analysis.html', {'data': data, 'res': res['Name'], 'role': res['role']})
     else:
         res = ''
         return render(request,'analysis.html', {'data': data, 'res': res})
@@ -86,16 +86,17 @@ def validateLoginCredentials(request):
         temp['password'] = request.POST.get('password')
         res = get_db_login(temp)
         temp['name'] = res[1]
+        temp['role'] = res[0]
         jwt = encode_data_values(temp)
 
         if res[0] == 'admin':
             return redirect('controlpanel')
         elif res[0] != 'user':
-            return redirect('^$')
+            return redirect('/')
 
     response = render(request,'index.html',{'res': res[1]})
     response.set_cookie('jwt',jwt)
-    print("cookie set ")
+    # print("cookie set ")
     return response
 
 
@@ -110,7 +111,7 @@ def controlpanel(request):
         if request.method == 'GET':
             search = request.GET.get('search')
             users = getAllUsers(search)
-            response = render(request,'controlpanel.html', {'res': res['Name'], 'users': users })
+            response = render(request,'controlpanel.html', {'res': res['Name'], 'users': users, 'role': res['role']  })
             response.set_cookie('jwt',jwt)
             return response
     else:

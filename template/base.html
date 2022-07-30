@@ -33,11 +33,7 @@
                     <a href="/" data-toggle="collapse" aria-expanded="false"><i class="fas fa-home"></i>
                         &nbsp; Home</a>
                 </li>
-                {% if role %}
-                <li class="mt-2">
-                    <a href="/controlpanel"><i class="fas fa-id-card"></i> &nbsp; Dashboard</a>
-                </li>
-                {% endif %}
+                
                 <li class="mt-2">
                     <a href="/analysis"><i class="fas fa-chart-bar"></i> &nbsp; Analysis</a>
                 </li>
@@ -51,7 +47,11 @@
                 </li>
 
                 {% endif %}
-
+                {% if role == "admin" %}
+                <li class="mt-2">
+                    <a href="/controlpanel"><i class="fas fa-id-card"></i> &nbsp; Control Panel</a>
+                </li>
+                {% endif %}
                 
             </ul>
         </nav>
@@ -68,7 +68,9 @@ $(function() {
         $('.components li').removeClass('active');
         $('.components li:nth-child(2)').addClass('active');
         break;
-    case '/dashboard':
+    case '/controlpanel':
+        $('.components li').removeClass('active');
+        $('.components li:nth-child(4)').addClass('active');
         break;
  }
 });

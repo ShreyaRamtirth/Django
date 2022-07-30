@@ -133,3 +133,10 @@ a.article:hover {
     background: #6d7fcc !important;
     color: #fff !important;
 }
+.boxes{
+    padding: 100px;
+    width: 100px;
+    height: 100px;
+    /* background: linear-gradient(to right, orange , yellow, green, cyan, blue, violet);*/
+     background-color: #6d7fcc;
+}
