@@ -38,6 +38,14 @@ def getAllUsers(search):
         result = user_collection.find({ 'name' : search})
     return result
 
+def get_user_count():
+    count = user_collection.count()
+    return count
+
+def get_stock_count():
+    count = stock_collection.count()
+    return count
+
 
 def add_search(search,user):
     result = user_collection.find({ 'email' : user['Username']})

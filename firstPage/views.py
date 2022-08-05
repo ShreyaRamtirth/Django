@@ -2,7 +2,7 @@ from urllib import response
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from firstPage.models import get_df,get_plot
-from firstPage.utils import add_search, get_db_register, get_db_login, getAllUsers
+from firstPage.utils import add_search, get_db_register, get_db_login, get_stock_count, get_user_count, getAllUsers
 import pandas as pd
 from django.contrib.staticfiles import finders
 import json
@@ -39,7 +39,7 @@ def analysis(request):
         else:
             return render(request,'analysis.html', {'data': data, 'res': res['Name'], 'role': res['role']})
     else:
-        res = ''
+        res == ''
         return render(request,'analysis.html', {'data': data, 'res': res})
 
 
@@ -57,7 +57,7 @@ def predictValue(request):
             add_search(temp['stocksymbol'], user)
         txt = f'{response[1]}'
         pred_value = txt.replace('[','').replace(']','')
-    return render(request,'analysis.html',{'chart': response[0], 'pred_price': pred_value, 'res': res})
+    return render(request,'analysis.html',{'chart': response[0], 'pred_price': pred_value, 'res': res['Name']})
 
 
 def login(request):
@@ -111,7 +111,11 @@ def controlpanel(request):
         if request.method == 'GET':
             search = request.GET.get('search')
             users = getAllUsers(search)
-            response = render(request,'controlpanel.html', {'res': res['Name'], 'users': users, 'role': res['role']  })
+            user_count = get_user_count()
+            search_count = get_stock_count()
+            response = render(request,'controlpanel.html', {'res': res['Name'], 'users': users, 'role': res['role'],
+            'users_count': user_count, 'searches': search_count , 'stocks' : '24024'
+              })
             response.set_cookie('jwt',jwt)
             return response
     else:
